@@ -1,0 +1,28 @@
+# Create a playbook that does the following:
+# - Add the user bob
+# - Upgrade all apt packages
+# - Install the latest version of Nginx
+# - Start Nginx
+---
+- name: Updating and Installing Nginx
+  hosts: all
+  vars:
+      state: latest
+      user: bob
+  tasks:
+  - name: Add the user {{ user }}
+    ansible.builtin.user:
+      name: "{{ user }}"
+  # - name: Upgrade all apt packages
+  #   apt:
+  #     force_apt_get: yes
+  #     upgrade: dist
+  - name: Install the {{ state }} of package "nginx"
+    apt:
+      name: "nginx"
+      state: "{{ state }}"
+
+  - name: Start Nginx
+    service:
+      name: nginx
+      state: started

@@ -1,0 +1,15 @@
+# Create a playbook that does the following:
+# - List all the packages installed on all target server
+
+---
+
+- name: List all the packages installed on all target server
+  hosts: all
+  tasks:
+    - name: Get list of all packages
+      command: "apt list --installed"
+      register: packages
+
+    - name: Display the list of packages
+      debug:
+        var: packages

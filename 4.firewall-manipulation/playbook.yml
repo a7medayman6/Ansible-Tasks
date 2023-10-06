@@ -1,0 +1,43 @@
+# Create a playbook that does the following:
+# - Installs UFW on Ubuntu
+# - Allows ports 22, 80, and 443 in the firewall on Ubuntu
+# - Start UFW Service
+# - Starts UFW
+# - Verify Firewall Status
+# - Display the status of UFW
+---
+- name: Firewall Manipulation
+  hosts: all
+  vars:
+      state: latest
+      user: bob
+  tasks:
+  - name: Install UFW
+    apt:
+      name: ufw
+      state: present
+  - name: Allow ports 22, 80, and 443 in the firewall on Ubuntu
+    ufw:
+      rule: allow
+      port: [22,80,443]
+    become: true
+    
+  - name: Start UFW Service
+    service:
+      name: ufw
+      state: started
+    become: true
+
+  - name: Start UFW
+    ufw:
+      state: enabled
+    become: true
+
+  - name: Verify Firewall Status
+    shell: ufw status
+    register: ufw_status
+    become: true
+
+  - name: Display the status of UFW
+    debug:
+      var: ufw_status.stdout_lines

@@ -1,0 +1,12 @@
+---
+
+- name: Hello World (Trying Shell)
+  hosts: all
+
+  tasks:
+  - name: Echo Hello World 
+    shell: |
+      echo "Hello World" > /tmp/hello.txt;
+      cat /tmp/hello.txt
+    
+    

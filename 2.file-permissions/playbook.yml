@@ -1,0 +1,28 @@
+# Create a playbook that does the following:
+# - Creates a tmp file called "my-file"
+# - Writes "Hello World" into the tmp file
+# - Prints the permissions of the tmp file
+# - Changes the permissions of the tmp file to 777
+# - Prints the permissions of the tmp file again
+
+---
+
+- name: File Permissions
+  hosts: all
+  vars:
+      filepath: /tmp/my-file
+
+  tasks:
+  - name: Create a tmp file called "my-file"
+    file: 
+      path: /tmp/my-file
+      state: touch
+  - name: Write "Hello World" into the tmp file
+    copy: 
+      dest: /tmp/my-file
+      content: "Hello World"
+  - name: Change the permissions of the tmp file to 777
+    file:
+      path: /tmp/my-file
+      mode: 777
+    become: true
